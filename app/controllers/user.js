@@ -13,7 +13,6 @@ const getUsers = async (req, res) => {
 const getUser = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(id);
     const user = await userModel.findById(id);
     if (!user) {
       return res.status(404).json({ message: "Usuario no encontrado" });
@@ -41,7 +40,7 @@ const createUser = async (req, res) => {
 };
 
 // Ruta para actualizar un usuario PATCH (c/u elementos) Tarea Clase 90
-
+//(sin password)
 const userPatch = async (req, res) => {
   try {
     const { id } = req.params;
@@ -53,14 +52,14 @@ const userPatch = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "Usuario  no encontrado" });
     }
-    res.status(200).json({ message: "Usuario actualizado exitosamente", user });
+    res.status(200).json({ message: "Usuario actualizado exitosamente"});
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
 // Ruta para actualizar un producto PUT (total de elementos) Practicando
-
+// (con password)
 const userPut = async (req, res) => {
   try {
     const { id } = req.params;
@@ -73,7 +72,7 @@ const userPut = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
-    res.status(200).json({ message: "Usuario actualizado exitosamente", user });
+    res.status(200).json({ message: "Usuario actualizado exitosamente" });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
