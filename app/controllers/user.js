@@ -27,11 +27,12 @@ const getUser = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email,rol, password } = req.body;
     const user = await userModel.create({
       name,
       email,
-      password: await userModel.encryptPassword(password),
+      rol,
+      password: await userModel.encryptPassword(password)
     });
     res.status(200).json({ message: "Usuario creado", user });
   } catch (error) {
@@ -44,7 +45,7 @@ const createUser = async (req, res) => {
 const userPatch = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email} = req.body;
+    const {name, email} = req.body;
     const user = await userModel.findByIdAndUpdate(id, {
       name,
       email
@@ -79,10 +80,11 @@ const userPut = async (req, res) => {
 };
 
 // Ruta para eliminar un producto Tarea Clase 90
-
+// modifique esta funcion para enviarle id por el body para que el usuario se elimine. el administrador es el unico que puede eliminar al usuario. revisar el middleware.
 const userDelete = async (req, res) => {
   try {
-    const id = req.params.id;
+    const {id} = req.body;
+    console.log(id)
     const deleteUser = await userModel.findByIdAndDelete(id);
     if (!deleteUser) {
       return res.status(404).json({ message: "Usuario no encontrado" });
@@ -92,5 +94,6 @@ const userDelete = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
 
 module.exports = { getUsers, getUser, userPatch, userPut, userDelete, createUser };

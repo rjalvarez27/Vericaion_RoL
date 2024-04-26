@@ -14,10 +14,18 @@ const UserSchema = new mongoose.Schema({
         require: [true, 'El correo es necesario'],
         trim: true 
     },
+    rol: {
+        type: String,
+        required: true,
+        default: 'user',
+        minLength: 4,
+        maxLength: 5
+    },
     password: {
         type:String,
         require: true
-    }
+    },
+    
 },{
     timestamps: true,
     versionKey: false
